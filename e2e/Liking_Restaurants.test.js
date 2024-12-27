@@ -26,6 +26,7 @@ Scenario("Liking a restaurant", async ({ I }) => {
 
 // eslint-disable-next-line no-undef
 Scenario("Unliking a restaurant", async ({ I }) => {
+  I.amOnPage("/");
   I.waitForElement(".resto-item_description", 5);
   I.seeElement(".resto-item_description");
   I.click(".resto-item > a ");
@@ -35,6 +36,17 @@ Scenario("Unliking a restaurant", async ({ I }) => {
   I.click("#likeButton");
 
   I.amOnPage("/#/favorite");
-  I.waitForElement(".resto-item_name", 10);
-  I.seeElement(".resto-item_name");
+  I.waitForElement(".resto-item_description", 5);
+  I.seeElement(".resto-item_description");
+
+  I.click(".resto-item > a ");
+  I.waitForElement("#likeButton", 2);
+  I.seeElement("#likeButton");
+  I.click("#likeButton");
+
+  I.amOnPage("/#/favorite");
+  I.saveScreenshot("empty_state_debug.png");
+
+  I.waitForText("You don't have a favourite restaurant.", 10, "body");
+  I.see("You don't have a favourite restaurant.", "body");
 });
